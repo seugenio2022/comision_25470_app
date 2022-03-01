@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import CartWidget from './CartWidget';
 
 const categories = ['Ofertas', 'Hombre', 'Mujer', 'Deportes'];
 
@@ -19,12 +20,15 @@ export default function NavBar() {
 						Ropa Online
 					</Typography>
 					<Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+
 						{categories.map((cat) => (
 							<MenuItem key={cat}>
 								<Typography textAlign="center">{cat}</Typography>
 							</MenuItem>
 						))}
+
 					</Box >
+					<CartWidget />
 					<Button color="inherit">Login</Button>
 				</Toolbar>
 			</AppBar>
