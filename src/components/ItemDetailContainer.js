@@ -1,23 +1,20 @@
 import { useEffect, useState } from 'react'
 import ItemDetail from './ItemDetail'
-
-let itemEj = {
-	"id": 1,
-	"title": "item1",
-	"description": "description1",
-	"price": "price1",
-	"pictureUrl": "./remera.jpg"
-}
+import { useParams } from 'react-router-dom';
+import { items } from '../mock/items';
 
 export default function ItemDetailContainer() {
 
 	const [item, setItem] = useState([])
+	const { id } = useParams()
 
 	useEffect(() => {
 
 		const promise = new Promise((res, rej) => {
 			setTimeout(() => {
-				res(itemEj)
+				console.log(id)
+				console.log(items.filter(item => item.id == id))
+				res(items.find(item => item.id == id))
 			}, 2000)
 
 		})
@@ -30,12 +27,10 @@ export default function ItemDetailContainer() {
 				console.log(error);
 			})
 
-	})
+	}, [id])
 
 	return (
 		<>
 			<ItemDetail detail={item} />
-		</>
-
-	)
+		</>)
 }

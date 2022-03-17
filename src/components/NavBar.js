@@ -8,23 +8,29 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import CartWidget from './CartWidget';
+import { Link } from 'react-router-dom';
 
-const categories = ['Ofertas', 'Hombre', 'Mujer', 'Deportes'];
+const categories = ['Hombre', 'Mujer', 'Deportes'];
 
 export default function NavBar() {
 	return (
 		<Box sx={{ flexGrow: 1 }}>
 			<AppBar position="static">
 				<Toolbar>
-					<Typography variant="h6" noWrap component="div" sx={{ mr: 2 }}>
-						Ropa Online
+
+					<Typography variant="h6" noWrap component={"div"} sx={{ mr: 2 }}>
+						<Link to="/"> Ropa Online</Link>
 					</Typography>
+
 					<Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
 
 						{categories.map((cat) => (
+
 							<MenuItem key={cat}>
-								<Typography textAlign="center">{cat}</Typography>
+
+								<Link to={"/category/" + cat}>{cat}</Link>
 							</MenuItem>
+
 						))}
 
 					</Box >

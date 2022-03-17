@@ -1,41 +1,25 @@
 import Typography from '@mui/material/Typography';
-import ItemCount from './ItemCount';
 import ItemList from './ItemList';
 import { useEffect, useState } from 'react'
-let items = [
-	{
-		"id": 1,
-		"title": "item1",
-		"description": "description1",
-		"price": "price1",
-		"pictureUrl": "./remera.jpg"
-	},
-	{
-		"id": 2,
-		"title": "item2",
-		"description": "description2",
-		"price": "price2",
-		"pictureUrl": "./remera.jpg"
-	},
-	{
-		"id": 3,
-		"title": "item3",
-		"description": "description3",
-		"price": "price3",
-		"pictureUrl": "./remera.jpg"
-	}
-]
+import { useParams } from 'react-router-dom';
+import { items } from '../mock/items';
 
 export default function ItemListContainer(props) {
-	const handleOnAdd = () => { }
 
 	const [products, setProducts] = useState([])
+	const { categoryName } = useParams()
 
 	useEffect(() => {
 
 		const promise = new Promise((res, rej) => {
 			setTimeout(() => {
-				res(items)
+				console.log(categoryName)
+				if (categoryName) {
+					res(items.filter(item => item.category === categoryName))
+				} else {
+					res(items)
+				}
+
 			}, 2000)
 
 		})
@@ -48,14 +32,13 @@ export default function ItemListContainer(props) {
 				console.log(error);
 			})
 
-	})
+	}, [categoryName])
 
 	return (
 		<>
 			<Typography variant="h1" component="h2">
 				{props.message}
 			</Typography>
-			<ItemCount initial={1} stock={5} onAdd={handleOnAdd} />
 			<ItemList items={products} />
 		</>
 

@@ -3,6 +3,7 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { Link } from 'react-router-dom';
 
 export default function Item(props) {
 
@@ -21,7 +22,7 @@ export default function Item(props) {
 				</Typography>
 			</CardContent>
 			<CardActions>
-				<Button size="small">Ver detalle del producto</Button>
+				<Link to={"/Item/" + props.item.id}> <Button variant="contained">Ver detalle del producto</Button></Link>
 			</CardActions>
 		</Card>
 	)

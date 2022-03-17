@@ -3,22 +3,24 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import ItemCount from './ItemCount';
 
-export default function ItemDetail(props) {
+export default function ItemDetail({ detail, handleOnAdd }) {
 	return (
 		<div>
 			<Card>
 				<CardContent>
 					<Typography variant="h5" component="div">
-						{props.detail.title}
+						{detail.title}
 					</Typography>
-					<img src={props.detail.pictureUrl} ></img>
+					<img src={detail.pictureUrl} ></img>
 					<Typography sx={{ mb: 1.5 }} color="text.secondary">
-						{props.detail.description}
+						{detail.description}
 					</Typography>
 					<Typography variant="body2">
-						{props.detail.price}
+						{detail.price}
 					</Typography>
+					<ItemCount initial={1} stock={5} onAdd={handleOnAdd} />
 				</CardContent>
 			</Card>
 		</div>
