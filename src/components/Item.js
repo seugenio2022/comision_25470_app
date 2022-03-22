@@ -4,16 +4,22 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
+import { CardMedia } from '@mui/material';
 
 export default function Item(props) {
 
 	return (
-		<Card>
+		<Card sx={{ minWidth: 300 }}>
+			<CardMedia
+				component="img"
+				alt="green iguana"
+				height="140"
+				image={props.item.pictureUrl}
+			/>
 			<CardContent>
 				<Typography variant="h5" component="div">
 					{props.item.title}
 				</Typography>
-				<img src={props.item.pictureUrl} ></img>
 				<Typography sx={{ mb: 1.5 }} color="text.secondary">
 					{props.item.description}
 				</Typography>

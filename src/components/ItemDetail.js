@@ -20,7 +20,7 @@ export default function ItemDetail({ detail, handleOnAdd }) {
 					<Typography variant="body2">
 						{detail.price}
 					</Typography>
-					<ItemCount initial={1} stock={5} onAdd={handleOnAdd} />
+					<ItemCount init={1} stock={5} onAdd={handleOnAdd} />
 				</CardContent>
 			</Card>
 		</div>

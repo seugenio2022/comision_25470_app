@@ -3,11 +3,15 @@ import { Button, Chip, IconButton } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 
-export default function ItemCount(props) {
-	const [cant, setCant] = useState(props.initial);
+export default function ItemCount({
+	stock = 0,
+	init = 1,
+	onAdd = () => { }
+}) {
+	const [cant, setCant] = useState(init);
 
 	const handleAdd = () => {
-		if (cant < props.stock) {
+		if (cant < stock) {
 			setCant(cant + 1);
 		}
 	};
@@ -28,7 +32,7 @@ export default function ItemCount(props) {
 			<IconButton color="primary" onClick={handleAdd}>
 				<AddIcon fontSize="small" />
 			</IconButton>
-			<Button variant="outlined">Agregar al carrito</Button>
+			<Button variant="outlined" onClick={() => onAdd(cant)}>Agregar al carrito</Button>
 		</>
 
 	)

@@ -35,7 +35,6 @@ export default function NavBar() {
 
 					</Box >
 					<CartWidget />
-					<Button color="inherit">Login</Button>
 				</Toolbar>
 			</AppBar>
 		</Box >
