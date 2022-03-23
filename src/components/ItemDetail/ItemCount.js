@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Button, Chip, IconButton } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
+import Counter from './Counter';
 
 export default function ItemCount({
 	stock = 0,
@@ -24,15 +24,11 @@ export default function ItemCount({
 
 	return (
 		<>
-			<IconButton color="primary" onClick={handleRemove}>
-				<RemoveIcon fontSize="small" />
-			</IconButton>
-			<Chip label={cant} size="large" variant="outlined"
-				style={{ 'width': '100px' }} />
-			<IconButton color="primary" onClick={handleAdd}>
-				<AddIcon fontSize="small" />
-			</IconButton>
-			<Button variant="outlined" onClick={() => onAdd(cant)}>Agregar al carrito</Button>
+			<Counter maxValue={stock} value={cant} handleAdd={handleAdd} handleRemove={handleRemove} />
+			<Button sx={{
+				width: "100%"
+			}}
+				variant="outlined" onClick={() => onAdd(cant)}>Agregar al carrito</Button>
 		</>
 
 	)

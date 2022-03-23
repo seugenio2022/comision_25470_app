@@ -7,36 +7,37 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import CartWidget from './CartWidget';
-import { Link } from 'react-router-dom';
-
-const categories = ['Hombre', 'Mujer', 'Deportes'];
-
+import CartWidget from './Cart/CartWidget';
+import { Link, NavLink } from 'react-router-dom';
+import Banner from './Banner';
+import { Stack } from '@mui/material';
+import { useLocation } from "react-router-dom"
 export default function NavBar() {
+
+	const location = useLocation();
+	console.log(location.pathname);
 	return (
-		<Box sx={{ flexGrow: 1 }}>
-			<AppBar position="static">
-				<Toolbar>
+		<>
+			<Box mb={4}>
+				<AppBar position="static" >
 
-					<Typography variant="h6" noWrap component={"div"} sx={{ mr: 2 }}>
-						<Link to="/"> Ropa Online</Link>
-					</Typography>
+					<Stack mx={10} direction="row" alignItems="center" justifyContent="space-between">
 
-					<Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+						<Typography variant='h5' mr={2}>
+							<Link to='/home' style={{ textDecoration: 'none', color: 'unset' }}>
+								Tienda de Ropa Online
+							</Link>
+						</Typography>
 
-						{categories.map((cat) => (
+						<CartWidget />
 
-							<MenuItem key={cat}>
+					</Stack>
 
-								<Link to={"/category/" + cat}>{cat}</Link>
-							</MenuItem>
+				</AppBar>
 
-						))}
+				<Banner show={location.pathname == "/home" ? true : false} />
+			</Box >
 
-					</Box >
-					<CartWidget />
-				</Toolbar>
-			</AppBar>
-		</Box >
+		</>
 	);
 }

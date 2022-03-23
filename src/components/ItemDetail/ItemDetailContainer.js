@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from 'react'
 import ItemDetail from './ItemDetail'
 import { useParams } from 'react-router-dom';
-import { items } from '../mock/items';
-import { CartContext } from './../context/CartContext';
+import { items } from '../../mock/items';
+import { CartContext } from '../../context/CartContext';
 
 export default function ItemDetailContainer() {
 

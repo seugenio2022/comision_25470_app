@@ -1,44 +1,58 @@
 
-
+let lorem = "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
 export const items = [
 	{
 		"id": 1,
-		"title": "item1",
-		"description": "description1",
+		"title": "Remera blanca para hombre",
+		"description": lorem,
 		"price": "300",
 		"pictureUrl": "/remera.jpg",
-		"category": "Hombre"
+		"category": "Abrigos",
+		"stock": 7
 	},
 	{
 		"id": 2,
-		"title": "item2",
-		"description": "description2",
+		"title": "Remera blanca para mujer",
+		"description": lorem,
 		"price": "200",
 		"pictureUrl": "/remera.jpg",
-		"category": "Mujer"
+		"category": "Bermudas y Shorts",
+		"stock": 6
 	},
 	{
 		"id": 3,
-		"title": "item3",
-		"description": "description3",
+		"title": "Remera blanca deporte",
+		"description": lorem,
 		"price": "100",
 		"pictureUrl": "/remera.jpg",
-		"category": "Deportes"
+		"category": "Blusas",
+		"stock": 5
 	},
 	{
 		"id": 4,
-		"title": "item4",
-		"description": "description4",
+		"title": "Remera blanca para hombre",
+		"description": lorem,
 		"price": "10000",
 		"pictureUrl": "/remera.jpg",
-		"category": "Hombre"
+		"category": "Abrigos",
+		"stock": 4
 	},
 	{
 		"id": 5,
-		"title": "item5",
-		"description": "description5",
+		"title": "Remera blanca para mujer",
+		"description": lorem,
 		"price": "10000",
 		"pictureUrl": "/remera.jpg",
-		"category": "Mujer"
+		"category": "Bermudas y Shorts",
+		"stock": 3
+	},
+	{
+		"id": 6,
+		"title": "Remera blanca para mujer",
+		"description": lorem,
+		"price": "10000",
+		"pictureUrl": "/remera.jpg",
+		"category": "Ropa Deportiva",
+		"stock": 2
 	}
 ];

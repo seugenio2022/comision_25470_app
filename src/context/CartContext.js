@@ -25,9 +25,7 @@ export const CartContextProvider = ({ children }) => {
 
 	const removeItem = (itemToRemove) => {
 		if (isInCart(itemToRemove)) {
-			console.log(itemToRemove.id);
 			let cartCopy = cart.filter(cartItem => cartItem.item.id !== itemToRemove.id)
-			console.log(cartCopy);
 			setCart(cartCopy)
 		}
 	}
@@ -38,12 +36,22 @@ export const CartContextProvider = ({ children }) => {
 		return cart.find(cart => cart.item.id == item.id)
 	}
 
+	const getTotalCount = () => {
+		let total = 0;
+		cart.forEach(cartItem => {
+			console.log(cartItem.count);
+			total = total + cartItem.count
+		})
+		return total
+	}
+
 	return (
 		<CartContext.Provider value={{
 			addItem,
 			removeItem,
 			clear,
-			cart
+			cart,
+			getTotalCount
 		}}>
 			{children}
 		</CartContext.Provider>
