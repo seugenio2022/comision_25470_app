@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import { Button, Chip, IconButton } from '@mui/material';
+import { Chip, IconButton } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import Counter from './Counter';
+import { BullButton } from '../../styles/components/BullButton';
 
 export default function ItemCount({
-	stock = 0,
+	stock = 1,
 	init = 1,
 	onAdd = () => { }
 }) {
@@ -25,10 +26,10 @@ export default function ItemCount({
 	return (
 		<>
 			<Counter maxValue={stock} value={cant} handleAdd={handleAdd} handleRemove={handleRemove} />
-			<Button sx={{
+			<BullButton sx={{
 				width: "100%"
 			}}
-				variant="outlined" onClick={() => onAdd(cant)}>Agregar al carrito</Button>
+				variant="contained" onClick={() => onAdd(cant)}>Agregar al carrito</BullButton>
 		</>
 
 	)

@@ -1,13 +1,9 @@
-import { Box } from '@mui/system';
-import { CardMedia, Stack } from '@mui/material';
 
-const borderStyle = {
-	border: "1px solid #ccc !important",
-	borderRadius: "2px",
-	height: "60px",
-	width: "60px",
-	p: 0.5
-}
+import { Stack } from '@mui/material';
+import { Box } from '@mui/system';
+import Thumbnail from './Thumbnail';
+
+
 export default function ThumbnailList({ images }) {
 	return (
 		<Stack
@@ -18,12 +14,13 @@ export default function ThumbnailList({ images }) {
 		>
 			{images.map((src, i) => {
 				return (
-					<Box key={i} Box sx={borderStyle}>
-						<CardMedia
-							component="img"
-							image={src}
-						/>
-					</Box >
+					<Box key={i} sx={{
+						border: "1px solid #ccc !important",
+						borderRadius: "2px",
+						p: 0.5
+					}}>
+						<Thumbnail src={src} />
+					</Box>
 				)
 			})}
 		</Stack>

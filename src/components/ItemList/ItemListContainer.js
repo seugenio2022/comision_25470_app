@@ -2,8 +2,9 @@ import Typography from '@mui/material/Typography';
 import ItemList from './ItemList';
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
-import { items } from '../../mock/items';
 import FilterList from './../Filter/FilterList';
+import { db } from '../../Firebase';
+import { query, where, collection, getDocs } from 'firebase/firestore';
 
 
 export default function ItemListContainer(props) {
@@ -14,25 +15,38 @@ export default function ItemListContainer(props) {
 
 	useEffect(() => {
 		setLoading(true)
-		const promise = new Promise((res, rej) => {
-			setTimeout(() => {
-				if (categoryName) {
-					res(items.filter(item => item.category === categoryName))
-				} else {
-					res(items)
+
+		const itemsCollection = collection(db, 'Items')
+		let resultDocs = {}
+
+		if (categoryName) {
+
+			const q = query(itemsCollection, where("category", "==", categoryName));
+			resultDocs = getDocs(q);
+
+		} else {
+			resultDocs = getDocs(itemsCollection);
+		}
+		let itemsAux = []
+		resultDocs.then((response) => {
+			response.forEach((doc) => {
+				const item = {
+					id: doc.id,
+					...doc.data()
 				}
-			}, 2000)
+				console.log(item)
+				itemsAux.push(item)
+			})
+
+			setProducts(itemsAux)
+			setLoading(false)
+
+		}).catch((error) => {
+
+			setLoading(false)
+			console.log(error)
 
 		})
-
-		promise
-			.then((response) => {
-				setProducts(response)
-				setLoading(false)
-			})
-			.catch((error) => {
-				setLoading(false)
-			})
 
 	}, [categoryName])
 

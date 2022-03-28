@@ -11,6 +11,7 @@ export default function ItemList({ items, loading }) {
 			justifyContent="flex-start"
 			alignItems="flex-start"
 			spacing={2}
+			ml={2}
 		>
 			{
 				(loading ? Array.from(new Array(3)) : items).map((product, i) => {

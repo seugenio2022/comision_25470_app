@@ -1,8 +1,18 @@
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-import { IconButton, Typography } from '@mui/material';
+import { Badge, IconButton, Typography } from '@mui/material';
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { CartContext } from './../../context/CartContext';
+import { styled } from '@mui/material/styles';
+
+const StyledBadge = styled(Badge)(({ theme }) => ({
+	'& .MuiBadge-badge': {
+		right: -2,
+		top: 17,
+		border: `3px solid ${theme.palette.background.paper}`,
+		padding: '0 4px',
+	},
+}));
 
 export default function CartWidget() {
 
@@ -12,13 +22,12 @@ export default function CartWidget() {
 
 		<IconButton component={Link} to="/cart/"
 			size="large"
-			style={{
-				color: "white",
-
-			}}>
-
-			<ShoppingCartOutlinedIcon fontSize="inherit" />
-			<Typography pl={0.5}>Carrito ({getTotalCount()})</Typography>
+			color='primary'
+			style={{ display: (getTotalCount() == 0 ? 'none' : '') }}
+		>
+			<StyledBadge badgeContent={getTotalCount()} color="primary">
+				<ShoppingCartOutlinedIcon fontSize="inherit" />
+			</StyledBadge>
 		</IconButton>
 	)
 }

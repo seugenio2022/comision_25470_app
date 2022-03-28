@@ -7,10 +7,12 @@ import ItemDetailContainer from './ItemDetail/ItemDetailContainer';
 
 export default function Layout() {
 	return (
-		<Container>
-			<Stack direction="row">
+		<Container maxWidth={"100%"} sx={{ mb: 20 }}>
+			<Stack direction="row"
+				justifyContent="center"
+				alignItems="flex-start" >
 				<Routes >
-					<Route path='/home' element={<ItemListContainer banner={true} />} />
+					<Route path='/' element={<ItemListContainer banner={true} />} />
 					<Route path='/category/:categoryName' element={<ItemListContainer />} />
 					<Route path='/item/:id' element={<ItemDetailContainer />} />
 					<Route path='/cart/' element={<Cart />} />

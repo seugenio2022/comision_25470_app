@@ -1,28 +1,32 @@
 import React, { useContext } from 'react'
 import Button from '@mui/material/Button';
-import { styled } from '@mui/material/styles';
+
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
+
 import Grid from '@mui/material/Grid';
 import { CartContext } from '../../context/CartContext';
-import { Stack, Typography } from '@mui/material';
-
-const Item = styled(Paper)(({ theme }) => ({
-	padding: theme.spacing(1),
-	textAlign: 'left',
-	elevation: 3
-}));
+import { Container, Stack, Typography } from '@mui/material';
+import CartItem from './CartItem';
+import { Link } from 'react-router-dom';
+import FormatNumber from '../../utils/FormatNumber';
 
 export default function Cart() {
 
-	const { clear, removeItem, cart } = useContext(CartContext)
+	const { clear, removeItem, cart, getTotalPrice } = useContext(CartContext)
 
 	return (
-		<>
+		<Container>
 			{cart.length == 0 ?
-				<Typography variant='h3'>Tu carrito está vacío</Typography>
+				<Box width="100%" sx={{ textAlign: "center" }}>
+					<Typography mb={2} variant='h3'>Tu carrito está vacío</Typography>
+
+					<Button size="large" to={"/"} LinkComponent={Link} variant="outlined">
+						Volver al inicio
+					</Button>
+
+				</Box>
 				:
-				<Box mt={5}>
+				<Box mt={5} width="100%" >
 					<Box mb={2}>
 						<Stack direction="row"
 							justifyContent="flex-end"
@@ -33,42 +37,21 @@ export default function Cart() {
 						</Stack>
 					</Box>
 					<Grid container spacing={2}>
-						{cart.map((cartItem, i) => {
+						{cart.map((item, i) => {
 							return (
-								<Grid key={i} item xs={12}>
-									<Item elevation={3}>
-										<Grid
-											container
-											direction="row"
-											justifyContent="space-around"
-											alignItems="flex-start"
-										>
-											<Grid item>
-												<Typography variant="h4" component="div">
-													{cartItem.item.title}
-												</Typography>
-												<Button onClick={() => removeItem(cartItem.item)} variant="outlined" size="small" >Eliminar</Button>
-											</Grid>
-											<Grid item>
-												<Typography variant="h5" component="div">
-													Cantidad: {cartItem.count}
-												</Typography>
-											</Grid>
-											<Grid item>
-												<Typography variant="h4" component="div">
-													${cartItem.item.price}
-												</Typography>
-											</Grid>
-										</Grid>
-									</Item>
-								</Grid>
+								<CartItem key={i} cartItem={item} removeItem={removeItem} />
 							)
 						})}
 
 					</Grid>
+					<Box sx={{ textAlign: "right", m: 2, mr: 13 }}>
+						<Typography variant='h5'>
+							Total: <FormatNumber value={getTotalPrice()} />
+						</Typography>
+					</Box>
 				</Box >
 			}
-		</>
+		</Container>
 
 	)
 }

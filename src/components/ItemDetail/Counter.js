@@ -17,6 +17,7 @@ export default function Counter({ handleAdd, handleRemove, value, maxValue }) {
 			<IconButton color="primary" onClick={handleAdd}>
 				<AddIcon fontSize="small" />
 			</IconButton>
+			
 			<Typography>({maxValue} disponibles)</Typography>
 		</Stack>
 	)

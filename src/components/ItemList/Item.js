@@ -1,43 +1,41 @@
-import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { Link } from 'react-router-dom';
+
 import { CardMedia, Chip, Divider } from '@mui/material';
 import { Box } from '@mui/system';
+import ItemButton from './ItemButton';
+import FormatNumber from './../../utils/FormatNumber';
+import { BullCard } from '../../styles/components/BullCard';
 
 export default function Item(props) {
 
 	return (
-		<Card sx={{ minWidth: 300 }}>
-			<Box sx={{
-				height: "300px",
-				width: "300px",
-				pb: 1
-			}}>
-				<CardMedia
-					component="img"
-					image={props.item.pictureUrl}
-				/>
-			</Box>
+		<BullCard sx={{ width: 280, height: 500 }}>
 
-			<Divider textAlign="left">
+			<CardMedia
+				component="img"
+				height={300}
+				image={props.item.pictureUrl}
+				sx={{ pb: 2 }}
+
+			/>
+
+			<Divider textAlign="center">
 				<Chip label={props.item.stock + " disponibles"} variant="outlined" size='small' />
 			</Divider>
-			<CardContent>
+			<CardContent sx={{ textAlign: "center" }}>
 				<Typography variant="h5" component="div">
-					$ {props.item.price}
+					<FormatNumber value={props.item.price} />
 				</Typography>
 				<Typography color="text.body">
 					{props.item.title}
 				</Typography>
 			</CardContent>
 			<CardActions sx={{ marginBottom: 2, justifyContent: "center" }}>
-				<Button to={"/Item/" + props.item.id} LinkComponent={Link} variant="outlined">
-					Ver detalle del producto
-				</Button>
+				<ItemButton id={props.item.id} />
 			</CardActions>
-		</Card>
+
+		</BullCard>
 	)
 }

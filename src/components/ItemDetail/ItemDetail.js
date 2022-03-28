@@ -1,16 +1,17 @@
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import ItemCount from './ItemCount';
 import { CardMedia, Grid, Paper, Stack } from '@mui/material';
 import { Box } from '@mui/system';
 import ThumbnailList from './ThumbnailList';
+import FormatNumber from '../../utils/FormatNumber';
+import ItemAdded from './ItemAdded';
+
+
 const borderStyle = {
 	maxWidth: 350,
 	border: "1px solid #ccc !important",
 	borderRadius: "10px",
+
 	height: 400,
 	padding: 2
 }
@@ -54,7 +55,7 @@ export default function ItemDetail({ detail, handleOnAdd }) {
 								{detail.title}
 							</Typography>
 							<Typography sx={{ mb: 3 }} variant="h5" component="div">
-								$ {detail.price}
+								<FormatNumber value={detail.price} />
 							</Typography>
 							<Typography color="text.body">
 								{detail.description}
