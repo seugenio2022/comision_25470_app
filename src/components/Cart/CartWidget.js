@@ -23,9 +23,11 @@ export default function CartWidget() {
 		<IconButton component={Link} to="/cart/"
 			size="large"
 			color='primary'
-			style={{ display: (getTotalCount() == 0 ? 'none' : '') }}
 		>
-			<StyledBadge badgeContent={getTotalCount()} color="primary">
+			<StyledBadge
+				style={{ display: (getTotalCount() == 0 ? 'none' : '') }}
+				badgeContent={getTotalCount()}
+				color="primary">
 				<ShoppingCartOutlinedIcon fontSize="inherit" />
 			</StyledBadge>
 		</IconButton>
