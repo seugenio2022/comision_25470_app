@@ -4,14 +4,12 @@ import Thumbnail from './Thumbnail';
 import { Link } from 'react-router-dom';
 import FormatNumber from '../../utils/FormatNumber';
 import { BullButton } from '../../styles/components/BullButton';
+import { BullAlert } from '../../styles/components/BullAlert';
 
 export default function ItemAdded({ item, cant }) {
 	return (
 
-		<Alert variant="outlined"
-			sx={{ p: 2, width: "100%", backgroundColor: "white" }}
-			severity="success"
-		>
+		<BullAlert variant="outlined" severity="success">
 			<Grid direction="row" container spacing={2} alignItems="center">
 				<Grid item xs={5} >
 					<Stack direction="row" spacing={2}>
@@ -36,6 +34,6 @@ export default function ItemAdded({ item, cant }) {
 					</BullButton>
 				</Grid>
 			</Grid>
-		</Alert>
+		</BullAlert>
 	)
 }

@@ -4,6 +4,7 @@ import { Container, Stack } from '@mui/material';
 import ItemListContainer from './ItemList/ItemListContainer';
 import Cart from './Cart/Cart';
 import ItemDetailContainer from './ItemDetail/ItemDetailContainer';
+import CheckOut from "./CheckOut/CheckOut";
 
 export default function Layout() {
 	return (
@@ -16,6 +17,7 @@ export default function Layout() {
 					<Route path='/category/:categoryName' element={<ItemListContainer />} />
 					<Route path='/item/:id' element={<ItemDetailContainer />} />
 					<Route path='/cart/' element={<Cart />} />
+					<Route path='/checkout/:id' element={<CheckOut />} />
 				</Routes>
 			</Stack>
 		</Container>

@@ -9,10 +9,33 @@ import { Container, Stack, Typography } from '@mui/material';
 import CartItem from './CartItem';
 import { Link } from 'react-router-dom';
 import FormatNumber from '../../utils/FormatNumber';
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { db } from '../../Firebase';
+import { useNavigate } from "react-router-dom";
 
 export default function Cart() {
 
 	const { clear, removeItem, cart, getTotalPrice } = useContext(CartContext)
+	const navigate = useNavigate()
+	const handleBuy = () => {
+		const order = {
+			buyer: {
+				name: 'Seba',
+				lastName: 'Euge',
+				email: 'seba@gmail.com',
+				phone: '2222222'
+			},
+			items: cart,
+			date: serverTimestamp(),
+			total: getTotalPrice()
+		}
+
+		const ordersCollection = collection(db, 'Orders');
+		const pedidored = addDoc(ordersCollection, order);
+		pedidored.then((res) => {
+			navigate(`/checkout/${res.id}`)
+		})
+	}
 
 	return (
 		<Container>
@@ -32,7 +55,7 @@ export default function Cart() {
 							justifyContent="flex-end"
 							alignItems="center"
 							spacing={2}>
-							<Button variant="contained" size="medium" >Comprar</Button>
+							<Button onClick={handleBuy} variant="contained" size="medium" >Comprar</Button>
 							<Button onClick={clear} variant="outlined" size="medium" >Vaciar el carrito</Button>
 						</Stack>
 					</Box>
