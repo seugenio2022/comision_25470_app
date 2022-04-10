@@ -5,6 +5,7 @@ import ItemListContainer from './ItemList/ItemListContainer';
 import Cart from './Cart/Cart';
 import ItemDetailContainer from './ItemDetail/ItemDetailContainer';
 import CheckOut from "./CheckOut/CheckOut";
+import Home from './Home/Home';
 
 export default function Layout() {
 	return (
@@ -13,8 +14,8 @@ export default function Layout() {
 				justifyContent="center"
 				alignItems="flex-start" >
 				<Routes >
-					<Route path='/' element={<ItemListContainer banner={true} />} />
-					<Route path='/category/:categoryName' element={<ItemListContainer />} />
+					<Route path='/' element={<Home />} />
+					<Route path='/category/:level/:categoryId/' element={<ItemListContainer />} />
 					<Route path='/item/:id' element={<ItemDetailContainer />} />
 					<Route path='/cart/' element={<Cart />} />
 					<Route path='/checkout/:id' element={<CheckOut />} />

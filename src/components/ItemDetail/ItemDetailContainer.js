@@ -2,13 +2,14 @@ import { useContext, useEffect, useState } from 'react'
 import ItemDetail from './ItemDetail'
 import { useParams } from 'react-router-dom';
 import { CartContext } from '../../context/CartContext';
-import { db } from '../../Firebase';
-import { getDoc, doc } from 'firebase/firestore';
 import ItemAdded from './ItemAdded';
 import { Container } from '@mui/material';
+import ItemService from '../../services/ItemService';
+
 
 export default function ItemDetailContainer() {
 
+	const itemService = new ItemService()
 	const [item, setItem] = useState([])
 	const { id } = useParams()
 	const { addItem } = useContext(CartContext)
@@ -21,9 +22,7 @@ export default function ItemDetailContainer() {
 
 	useEffect(() => {
 
-		const docRef = doc(db, "Items", id);
-		const docSnap = getDoc(docRef)
-		docSnap.then((response) => {
+		itemService.getById(id).then((response) => {
 			if (response.exists()) {
 				const item = {
 					id: response.id,

@@ -24,11 +24,11 @@ export default function Filter({ name, values }) {
 			<Collapse in={open} timeout="auto" unmountOnExit>
 
 				<List>
-					{values.map((cat, i) => (
+					{values.map((value, i) => (
 						<ListItem disablePadding key={i}>
-							<ListItemButton component={Link} key={cat} to={"/category/" + cat} >
+							<ListItemButton component={Link} key={value.id} to={`/category/${value.level}/${value.id}/`} >
 								<ListItemText>
-									{cat} <BullTextInfo variant="caption">(23)</BullTextInfo>
+									{value.name} <BullTextInfo variant="caption">(23)</BullTextInfo>
 								</ListItemText>
 							</ListItemButton>
 						</ListItem>

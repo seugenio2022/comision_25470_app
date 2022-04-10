@@ -2,19 +2,9 @@
 import Filter from './Filter';
 import { Box } from '@mui/system';
 
-const filters = [
-	{
-		"id": 1,
-		"name": "Categoría",
-		"values": ['Abrigos', 'Bermudas y Shorts', 'Blusas', 'Remeras']
-	},
-	{
-		"id": 2,
-		"name": "Marca",
-		"values": ['Nike', 'Adidas', 'Lacoste', 'Puma']
-	}
-]
-export default function FilterList() {
+export default function FilterList({ filters }) {
+
+
 
 	return (
 		<Box sx={{ mr: 2 }}>

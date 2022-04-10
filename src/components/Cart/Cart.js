@@ -9,12 +9,13 @@ import { Container, Stack, Typography } from '@mui/material';
 import CartItem from './CartItem';
 import { Link } from 'react-router-dom';
 import FormatNumber from '../../utils/FormatNumber';
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
-import { db } from '../../Firebase';
 import { useNavigate } from "react-router-dom";
+import OrderService from '../../services/OrderService';
+import { serverTimestamp } from 'firebase/firestore';
 
 export default function Cart() {
 
+	const orderService = new OrderService()
 	const { clear, removeItem, cart, getTotalPrice } = useContext(CartContext)
 	const navigate = useNavigate()
 	const handleBuy = () => {
@@ -30,9 +31,7 @@ export default function Cart() {
 			total: getTotalPrice()
 		}
 
-		const ordersCollection = collection(db, 'Orders');
-		const pedidored = addDoc(ordersCollection, order);
-		pedidored.then((res) => {
+		orderService.add(order).then((res) => {
 			navigate(`/checkout/${res.id}`)
 		})
 	}

@@ -1,40 +1,73 @@
-import Typography from '@mui/material/Typography';
 import ItemList from './ItemList';
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import FilterList from './../Filter/FilterList';
-import { db } from '../../Firebase';
-import { query, where, collection, getDocs } from 'firebase/firestore';
+import CategoryService from '../../services/CategoryService';
+import ItemService from '../../services/ItemService';
 
+export default function ItemListContainer() {
 
-export default function ItemListContainer(props) {
-
+	const categoryService = new CategoryService()
+	const itemService = new ItemService()
 	const [products, setProducts] = useState([])
 	const [loading, setLoading] = useState(true)
-	const { categoryName } = useParams()
+	const { level, categoryId } = useParams()
+	const [filters, setFilters] = useState([])
 
-	useEffect(() => {
-		setLoading(true)
+	const setCategoriesFilter = () => {
 
-		const itemsCollection = collection(db, 'Items')
+		let filterAux = []
+		categoryService.getByParentId(categoryId).then((response) => {
+			const category = {
+				id: 1,
+				name: "Categoría",
+				values: []
+			}
+			response.forEach((doc) => {
+				category.values.push({ ...doc.data() })
+			})
+
+			filterAux.push(category)
+			setFilters(filterAux)
+			loadProducts(category.values)
+
+		}).catch((error) => {
+			console.log(error)
+		})
+
+	}
+
+	const loadProducts = (categoriesFather) => {
+
 		let resultDocs = {}
 
-		if (categoryName) {
 
-			const q = query(itemsCollection, where("category", "==", categoryName));
-			resultDocs = getDocs(q);
+		if (categoryId && level != '0') {
+			console.log(level + " " + categoryId)
+			resultDocs = itemService.getByCategoriesId([categoryId])
+		} else if (level == '0' && categoriesFather?.length > 0) {
+
+			const categoriesChildId = categoriesFather.filter((cat) =>
+				cat.parentId == categoryId
+			).map(cat => cat.id)
+
+			resultDocs = itemService.getByCategoriesId(categoriesChildId)
 
 		} else {
-			resultDocs = getDocs(itemsCollection);
+			resultDocs = itemService.getAll();
 		}
+
 		let itemsAux = []
 		resultDocs.then((response) => {
+
+
 			response.forEach((doc) => {
 				const item = {
 					id: doc.id,
 					...doc.data()
 				}
-				console.log(item)
+
+
 				itemsAux.push(item)
 			})
 
@@ -48,11 +81,22 @@ export default function ItemListContainer(props) {
 
 		})
 
-	}, [categoryName])
+	}
+
+	useEffect(() => {
+		setLoading(true)
+
+		if (level == '0') {
+			setCategoriesFilter()
+		} else {
+			loadProducts()
+		}
+
+	}, [level, categoryId])
 
 	return (
 		<>
-			<FilterList />
+			<FilterList filters={filters} />
 			<ItemList items={products} loading={loading} />
 		</>
 

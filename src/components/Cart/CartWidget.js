@@ -23,6 +23,7 @@ export default function CartWidget() {
 		<IconButton component={Link} to="/cart/"
 			size="large"
 			color='primary'
+			sx={{ width: "250px" }}
 		>
 			<StyledBadge
 				style={{ display: (getTotalCount() == 0 ? 'none' : '') }}

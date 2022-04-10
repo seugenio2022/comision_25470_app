@@ -1,67 +1,59 @@
-import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Box } from '@mui/system';
-import { Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import CategoryService from '../../services/CategoryService';
 
-export default function TabControls() {
-	const [value, setValue] = useState(0);
+const _categoryService = new CategoryService()
+
+export default function TabControls({ location }) {
+
+
+	const [value, setValue] = useState(false);
+	const [categoriesFather, setCategoriesFather] = useState([]);
+	const navigate = useNavigate()
+
+	useEffect(() => {
+
+		let catAux = []
+
+		_categoryService.getCategoriesFather().then((response) => {
+
+			response.forEach((doc) => {
+
+				const category = {
+					...doc.data()
+				}
+				catAux.push(category)
+			})
+			setCategoriesFather(catAux)
+		}).catch((error) => {
+			console.log(error)
+		})
+
+		if (location.pathname === '/') {
+			setValue(false);
+		}
+
+	}, [location.pathname]);
+
+	const handleClick = (catId) => {
+		navigate(`/category/0/${catId}/`)
+	}
 
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
 	};
 
 	return (
-		<Box sx={{}}>
-			<Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-				<Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-					<Tab label="Hombre" {...a11yProps(0)} />
-					<Tab label="Mujer" {...a11yProps(1)} />
-					<Tab label="Deportes" {...a11yProps(2)} />
-				</Tabs>
-			</Box>
-			{/* <TabPanel value={value} index={0}>
-				Item One
-			</TabPanel>
-			<TabPanel value={value} index={1}>
-				Item Two
-			</TabPanel>
-			<TabPanel value={value} index={2}>
-				Item Three
-			</TabPanel> */}
+		<Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+			<Tabs value={value} onChange={handleChange}>
+				{categoriesFather.map((cat) => (
+					<Tab onClick={() => handleClick(cat.id)} key={cat.id} label={cat.name} />
+				))}
+			</Tabs>
 		</Box>
 	);
 }
 
-function TabPanel(props) {
-	const { children, value, index, ...other } = props;
-
-	return (
-		<div
-			role="tabpanel"
-			hidden={value !== index}
-			id={`simple-tabpanel-${index}`}
-			aria-labelledby={`simple-tab-${index}`}
-			{...other}
-		>
-			{value === index && (
-				<Box sx={{ p: 3 }}>
-					<Typography>{children}</Typography>
-				</Box>
-			)}
-		</div>
-	);
-}
-TabPanel.propTypes = {
-	children: PropTypes.node,
-	index: PropTypes.number.isRequired,
-	value: PropTypes.number.isRequired,
-};
-
-function a11yProps(index) {
-	return {
-		id: `simple-tab-${index}`,
-		'aria-controls': `simple-tabpanel-${index}`,
-	};
-}

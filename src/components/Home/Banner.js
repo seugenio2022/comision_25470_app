@@ -1,12 +1,6 @@
 import * as React from 'react';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import MobileStepper from '@mui/material/MobileStepper';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
-import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
 
@@ -47,12 +41,12 @@ export default function Banner() {
 				enableMouseEvents
 			>
 				{images.map((step, index) => (
-					<div key={step.label}>
+					<div key={step.imgPath}>
 						{Math.abs(activeStep - index) <= 2 ? (
 							<Box
 								component="img"
 								sx={{
-									height: 300,
+									height: 380,
 									display: 'block',
 									overflow: 'hidden',
 									width: '100%',
