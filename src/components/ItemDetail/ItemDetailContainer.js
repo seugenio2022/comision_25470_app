@@ -29,11 +29,7 @@ export default function ItemDetailContainer() {
 					...response.data()
 				}
 				setItem(item)
-			} else {
-				console.log("No such document!")
 			}
-		}).catch((error) => {
-			console.log(error);
 		})
 
 	}, [id])

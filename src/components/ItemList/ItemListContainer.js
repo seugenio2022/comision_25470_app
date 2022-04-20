@@ -1,9 +1,13 @@
 import ItemList from './ItemList';
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
-import FilterList from './../Filter/FilterList';
 import CategoryService from '../../services/CategoryService';
 import ItemService from '../../services/ItemService';
+import BreadCrumb from '../BreadCrumb/BreadCrumb';
+import { Stack } from '@mui/material';
+import { CategoryContext } from '../../context/CategoryContext';
+import BreadCrumbContainer from '../BreadCrumb/BreadCrumbContainer';
+import FilterListContainer from '../Filter/FilterListContainer';
 
 export default function ItemListContainer() {
 
@@ -12,30 +16,6 @@ export default function ItemListContainer() {
 	const [products, setProducts] = useState([])
 	const [loading, setLoading] = useState(true)
 	const { level, categoryId } = useParams()
-	const [filters, setFilters] = useState([])
-
-	const setCategoriesFilter = () => {
-
-		let filterAux = []
-		categoryService.getByParentId(categoryId).then((response) => {
-			const category = {
-				id: 1,
-				name: "Categoría",
-				values: []
-			}
-			response.forEach((doc) => {
-				category.values.push({ ...doc.data() })
-			})
-
-			filterAux.push(category)
-			setFilters(filterAux)
-			loadProducts(category.values)
-
-		}).catch((error) => {
-			console.log(error)
-		})
-
-	}
 
 	const loadProducts = (categoriesFather) => {
 
@@ -43,8 +23,8 @@ export default function ItemListContainer() {
 
 
 		if (categoryId && level != '0') {
-			console.log(level + " " + categoryId)
-			resultDocs = itemService.getByCategoriesId([categoryId])
+
+			resultDocs = itemService.getByCategoriesId([parseInt(categoryId)])
 		} else if (level == '0' && categoriesFather?.length > 0) {
 
 			const categoriesChildId = categoriesFather.filter((cat) =>
@@ -75,10 +55,7 @@ export default function ItemListContainer() {
 			setLoading(false)
 
 		}).catch((error) => {
-
 			setLoading(false)
-			console.log(error)
-
 		})
 
 	}
@@ -86,19 +63,22 @@ export default function ItemListContainer() {
 	useEffect(() => {
 		setLoading(true)
 
-		if (level == '0') {
-			setCategoriesFilter()
-		} else {
-			loadProducts()
-		}
+		categoryService.getByParentId(categoryId).then((response) => {
+			const category = {
+				id: 1,
+				name: "Categoría",
+				values: []
+			}
+			response.forEach((doc) => {
+				category.values.push({ ...doc.data() })
+			})
+			loadProducts(category.values)
+
+		})
+		loadProducts()
+
 
 	}, [level, categoryId])
 
-	return (
-		<>
-			<FilterList filters={filters} />
-			<ItemList items={products} loading={loading} />
-		</>
-
-	)
+	return (<ItemList items={products} loading={loading} />)
 }

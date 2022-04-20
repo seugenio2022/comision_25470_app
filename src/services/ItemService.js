@@ -12,10 +12,7 @@ export default class ItemService extends BaseService {
 	}
 
 	getByCategoriesId = (ids) => {
-		return this.get("in", 'categoryId', ids);
-	}
 
-	getById = (id) => {
-		return this.getById(id);
+		return this.get("in", 'categoryId', ids);
 	}
 }

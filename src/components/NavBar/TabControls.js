@@ -1,9 +1,10 @@
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Box } from '@mui/system';
 import { useNavigate } from 'react-router-dom';
 import CategoryService from '../../services/CategoryService';
+import { CategoryContext } from '../../context/CategoryContext';
 
 const _categoryService = new CategoryService()
 
@@ -13,6 +14,7 @@ export default function TabControls({ location }) {
 	const [value, setValue] = useState(false);
 	const [categoriesFather, setCategoriesFather] = useState([]);
 	const navigate = useNavigate()
+	const { setCategory } = useContext(CategoryContext)
 
 	useEffect(() => {
 
@@ -28,8 +30,6 @@ export default function TabControls({ location }) {
 				catAux.push(category)
 			})
 			setCategoriesFather(catAux)
-		}).catch((error) => {
-			console.log(error)
 		})
 
 		if (location.pathname === '/') {
@@ -38,8 +38,9 @@ export default function TabControls({ location }) {
 
 	}, [location.pathname]);
 
-	const handleClick = (catId) => {
-		navigate(`/category/0/${catId}/`)
+	const handleClick = (cat) => {
+		setCategory(cat)
+		navigate(`/category/0/${cat.id}/`)
 	}
 
 	const handleChange = (event, newValue) => {
@@ -50,7 +51,7 @@ export default function TabControls({ location }) {
 		<Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
 			<Tabs value={value} onChange={handleChange}>
 				{categoriesFather.map((cat) => (
-					<Tab onClick={() => handleClick(cat.id)} key={cat.id} label={cat.name} />
+					<Tab sx={{ fontSize: "15px", fontWeight: "900" }} onClick={() => handleClick(cat)} key={cat.id} label={cat.name} />
 				))}
 			</Tabs>
 		</Box>

@@ -7,7 +7,7 @@ export const CartContextProvider = ({ children }) => {
 	const [cart, setCart] = useState([])
 
 	const addItem = (item, count) => {
-		console.log(item, count);
+
 		let newCartItem = { item, count }
 		let cartCopy = cart.slice(0)
 		if (isInCart(item)) {
@@ -40,7 +40,7 @@ export const CartContextProvider = ({ children }) => {
 	const getTotalCount = () => {
 		let total = 0;
 		cart.forEach(cartItem => {
-			console.log(cartItem.count);
+
 			total = total + cartItem.count
 		})
 		return total

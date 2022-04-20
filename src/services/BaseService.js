@@ -4,6 +4,7 @@ import { db } from '../Firebase';
 export default class BaseService {
 
 	constructor(collectionName) {
+		this.collectionName = collectionName;
 		this.collectionDoc = collection(db, collectionName)
 	}
 
@@ -18,7 +19,7 @@ export default class BaseService {
 	}
 
 	getById = (id) => {
-		const docRef = doc(db, this.collectionDoc, id);
+		const docRef = doc(db, this.collectionName, id);
 		return getDoc(docRef)
 	}
 
