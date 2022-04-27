@@ -1,3 +1,4 @@
+import { FilterAltSharp } from '@mui/icons-material';
 import BaseService from './BaseService';
 
 export default class FilterService extends BaseService {
@@ -7,30 +8,38 @@ export default class FilterService extends BaseService {
 		this.filterValuesService = new BaseService('FilterValues');
 	}
 
-	getAllWithValues = (onComplete) => {
+	getAllWithValues = async (onComplete) => {
 		const filters = []
-		this.get().then(response => {
 
-			response.forEach((doc) => {
-				const filter = {
-					...doc.data()
-				}
-				this.filterValuesService.get("==", "filterId", filter.filterId).then(response => {
-					const values = []
-					response.forEach((doc) => {
+		const response = await this.get()
+		const promisesGetValues = []
 
-						const value = {
-							...doc.data()
-						}
-						values.push(value)
-					})
-					filter.values = values
+		response.forEach((doc) => {
+			const filter = {
+				...doc.data()
+			}
+
+			const pFilterValues = this.filterValuesService.get("==", "filterId", parseInt(filter.id))
+			promisesGetValues.push(pFilterValues)
+			filters.push(filter)
+		})
+
+		Promise.all(promisesGetValues).then((responseValues) => {
+
+			responseValues.forEach((response, i) => {
+
+				const values = []
+				response.forEach((doc) => {
+					const value = {
+						...doc.data()
+					}
+					values.push(value)
 				})
-				filters.push(filter)
-
+				filters[i].values = values
 			})
 			onComplete(filters)
 		})
+
 	}
 
 }

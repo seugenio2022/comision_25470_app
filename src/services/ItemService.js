@@ -15,4 +15,9 @@ export default class ItemService extends BaseService {
 
 		return this.get("in", 'categoryId', ids);
 	}
+
+	getByCategoriesId = (ids) => {
+
+		return this.get("in", 'categoryId', ids);
+	}
 }

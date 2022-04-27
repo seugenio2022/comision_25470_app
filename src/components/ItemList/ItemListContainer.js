@@ -3,30 +3,28 @@ import { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import CategoryService from '../../services/CategoryService';
 import ItemService from '../../services/ItemService';
-import BreadCrumb from '../BreadCrumb/BreadCrumb';
-import { Stack } from '@mui/material';
-import { CategoryContext } from '../../context/CategoryContext';
-import BreadCrumbContainer from '../BreadCrumb/BreadCrumbContainer';
-import FilterListContainer from '../Filter/FilterListContainer';
+import { ItemsContext } from '../../context/ItemsContext';
+import Constants from '../../utils/Constants';
+import { FilterContext } from '../../context/FilterContext';
 
 export default function ItemListContainer() {
 
 	const categoryService = new CategoryService()
 	const itemService = new ItemService()
-	const [products, setProducts] = useState([])
 	const [loading, setLoading] = useState(true)
 	const { level, categoryId } = useParams()
+	const { items, setItemsWithFilters } = useContext(ItemsContext)
 
 	const loadProducts = (categoriesFather) => {
 
 		let resultDocs = {}
+		let clearFilters = false
 
-
-		if (categoryId && level != '0') {
+		if (categoryId && level != Constants.CATEOGRY_LEVEL_0) {
 
 			resultDocs = itemService.getByCategoriesId([parseInt(categoryId)])
-		} else if (level == '0' && categoriesFather?.length > 0) {
-
+		} else if (level == Constants.CATEOGRY_LEVEL_0 && categoriesFather?.length > 0) {
+			clearFilters = true
 			const categoriesChildId = categoriesFather.filter((cat) =>
 				cat.parentId == categoryId
 			).map(cat => cat.id)
@@ -34,6 +32,8 @@ export default function ItemListContainer() {
 			resultDocs = itemService.getByCategoriesId(categoriesChildId)
 
 		} else {
+
+			clearFilters = true
 			resultDocs = itemService.getAll();
 		}
 
@@ -51,7 +51,7 @@ export default function ItemListContainer() {
 				itemsAux.push(item)
 			})
 
-			setProducts(itemsAux)
+			setItemsWithFilters(itemsAux, clearFilters)
 			setLoading(false)
 
 		}).catch((error) => {
@@ -80,5 +80,5 @@ export default function ItemListContainer() {
 
 	}, [level, categoryId])
 
-	return (<ItemList items={products} loading={loading} />)
+	return (<ItemList items={items} loading={loading} />)
 }
