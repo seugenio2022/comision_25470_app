@@ -18,7 +18,7 @@ export default function FilterListContainer() {
 	const [filterList, setFilterList] = useState([])
 	const [categoryFilter, setCategoryFilter] = useState({})
 	const { setCategory } = useContext(CategoryContext)
-	const { filterListing } = useContext(ItemsContext)
+	const { filterListing, unfilteredListing } = useContext(ItemsContext)
 	const { setFiltersSelected, filtersSelected } = useContext(FilterContext)
 	const categoryService = new CategoryService()
 	const filterService = new FilterService()
@@ -49,15 +49,12 @@ export default function FilterListContainer() {
 		})
 
 		filterService.getAllWithValues((filters) => {
-			setFilterList(filters)
+
+			const newFilters = filters.map(filter => ({ ...filter, selected: false }))
+			setFilterList(newFilters)
 			setLoading(false)
 		})
 	}, [categoryId])
-
-	useEffect(() => {
-
-
-	}, [])
 
 	const handleClickCategory = (name, category) => {
 		setCategory(category)
@@ -71,10 +68,21 @@ export default function FilterListContainer() {
 		filtersSelectedAux.push({ "name": filterName, "value": filterValue.name })
 		setFiltersSelected(filtersSelectedAux)
 
-		setFilterList(filterList.filter((filter) => filter.name != filterName))
+		const newFilters = filterList.map(filter =>
+			filter.name == filterName ? { ...filter, selected: true } : filter
+		)
+		setFilterList(newFilters)
 	};
-	const handleDelete = () => {
+	const handleDelete = (filterUnselected) => {
 
+		const newFilters = filterList.map(filter =>
+			filter.name == filterUnselected.name ? { ...filter, selected: false } : filter
+		)
+		setFilterList(newFilters)
+		const newFiltersSelected = filtersSelected.filter(filter => filter.name != filterUnselected.name)
+		setFiltersSelected(newFiltersSelected)
+
+		unfilteredListing(newFiltersSelected)
 	}
 
 	return (

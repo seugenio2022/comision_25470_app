@@ -14,7 +14,7 @@ export default function Filter({ filter, handleClick }) {
 	};
 
 	return (
-		filter.values ?
+		filter.values && !filter.selected ?
 			<Box mb={2} width={250}>
 				<ListItemButton onClick={handleClickTitle}>
 					<ListItemText >
@@ -30,7 +30,7 @@ export default function Filter({ filter, handleClick }) {
 							<ListItem disablePadding key={i}>
 								<ListItemButton onClick={() => handleClick(name, value)} key={value.id}>
 									<ListItemText>
-										{value.name} <BullTextInfo variant="caption">(23)</BullTextInfo>
+										{value.name}
 									</ListItemText>
 								</ListItemButton>
 							</ListItem>
