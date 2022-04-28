@@ -1,11 +1,9 @@
 import Box from '@mui/material/Box';
 import CartWidget from '../Cart/CartWidget';
 import { Link, NavLink } from 'react-router-dom';
-import Banner from '../Home/Banner';
 import { Stack } from '@mui/material';
 import { useLocation } from "react-router-dom"
 import { BullAppBar } from '../../styles/components/BullAppBar';
-import { useState } from 'react';
 import TabControls from './TabControls';
 
 export default function NavBar() {

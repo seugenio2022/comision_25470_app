@@ -4,9 +4,10 @@
 
 # Funcionalidades:
 	* Categorias nivel 1 y nivel 2.
-	* BreadCrumb
+	* BreadCrumb con categorias
 	* Carrito de compra
 	* Detalle producto
+	* Filtrar/Desfiltrar por marca y género
 	
 # Librerias:
 	* MaterialUI
